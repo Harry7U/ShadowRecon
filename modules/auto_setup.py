@@ -6,7 +6,7 @@ import json
 def command_exists(cmd):
     return subprocess.call(["which", cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
-def install_dependencies(config):
+def install_dependencies(config, verbose):
     dependencies = config.get("dependencies", {
         "subfinder": "https://github.com/projectdiscovery/subfinder",
         "assetfinder": "https://github.com/tomnomnom/assetfinder",
@@ -47,7 +47,7 @@ def main():
     with open("config.json", "r") as f:
         config = json.load(f)
 
-    install_dependencies(config)
+    install_dependencies(config, args.verbose)
 
 if __name__ == "__main__":
     main()
