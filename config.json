@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "subfinder": "https://github.com/projectdiscovery/subfinder",
+    "assetfinder": "https://github.com/tomnomnom/assetfinder",
+    "httpx": "https://github.com/projectdiscovery/httpx",
+    "nuclei": "https://github.com/projectdiscovery/nuclei"
+  },
+  "parallel_threads": 200,
+  "ports": "80,443,8080,8000,8888",
+  "notification": {
+    "slack": {
+      "enabled": false,
+      "webhook_url": ""
+    },
+    "discord": {
+      "enabled": false,
+      "webhook_url": ""
+    }
+  },
+  "cloud": {
+    "aws": {
+      "enabled": false,
+      "bucket": ""
+    }
+  }
+}
