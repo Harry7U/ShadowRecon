@@ -3,7 +3,12 @@
     "subfinder": "https://github.com/projectdiscovery/subfinder",
     "assetfinder": "https://github.com/tomnomnom/assetfinder",
     "httpx": "https://github.com/projectdiscovery/httpx",
-    "nuclei": "https://github.com/projectdiscovery/nuclei"
+    "nuclei": "https://github.com/projectdiscovery/nuclei",
+    "katana": "https://github.com/projectdiscovery/katana",
+    "gf": "https://github.com/tomnomnom/gf",
+    "bxss": "https://github.com/1N3/BXSS",
+    "sqlmap": "https://github.com/sqlmapproject/sqlmap",
+    "openredirect": "https://github.com/ak1t4/openredirect"
   },
   "parallel_threads": 200,
   "ports": "80,443,8080,8000,8888",
