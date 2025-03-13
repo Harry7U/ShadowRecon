@@ -1,5 +1,4 @@
 argparse
-json
-os
+requests
 subprocess
 csv
