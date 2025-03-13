@@ -8,7 +8,7 @@
     "gf": "https://github.com/tomnomnom/gf",
     "bxss": "https://github.com/1N3/BXSS",
     "sqlmap": "https://github.com/sqlmapproject/sqlmap",
-    "openredirect": "https://github.com/ak1t4/openredirect"
+    "redirect-checker": "https://github.com/s0md3v/redirect-checker"
   },
   "parallel_threads": 200,
   "ports": "80,443,8080,8000,8888",
