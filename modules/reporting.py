@@ -1,37 +1,56 @@
+import os
 import json
 import csv
-import os
+import markdown
+import argparse
 
-def generate_report(data, config):
-    print("[+] Generating structured reports...")
-    with open("report.json", "w") as jf:
-        json.dump(data, jf, indent=4)
-    print("[+] JSON report generated: report.json")
-    with open("report.csv", "w", newline="") as cf:
-        writer = csv.writer(cf)
-        writer.writerow(["Module", "Output File/Details"])
-        writer.writerow(["Subdomains", data.get("subdomains")])
-        writer.writerow(["Active Hosts", data.get("active_hosts")])
-        writer.writerow(["URLs", data.get("urls")])
-        writer.writerow(["JS Files", data.get("js_files")])
-        writer.writerow(["Vuln Results", data.get("vuln_results")])
-    print("[+] CSV report generated: report.csv")
-    with open("report.md", "w") as mf:
-        mf.write("# Bug Hunting & Security Recon Report\n\n")
-        mf.write(f"**Target:** {data.get('target')}\n\n")
-        mf.write("## Summary\n")
-        mf.write("- Subdomains: " + str(data.get("subdomains")) + "\n")
-        mf.write("- Active Hosts: " + str(data.get("active_hosts")) + "\n")
-        mf.write("- Vulnerability Results: " + str(data.get("vuln_results")) + "\n")
-    print("[+] Markdown report generated: report.md")
-    with open("report.html", "w") as hf:
-        hf.write("<html><head><title>Recon Report</title></head><body>")
-        hf.write("<h1>Bug Hunting & Security Recon Report</h1>")
-        hf.write(f"<h2>Target: {data.get('target')}</h2>")
-        hf.write("<ul>")
-        hf.write("<li>Subdomains: " + str(data.get("subdomains")) + "</li>")
-        hf.write("<li>Active Hosts: " + str(data.get("active_hosts")) + "</li>")
-        hf.write("<li>Vulnerability Results: " + str(data.get("vuln_results")) + "</li>")
-        hf.write("</ul>")
-        hf.write("</body></html>")
-    print("[+] HTML report generated: report.html")
+def generate_report(scan_results, output_dir, verbose):
+    json_report = os.path.join(output_dir, "report.json")
+    csv_report = os.path.join(output_dir, "report.csv")
+    md_report = os.path.join(output_dir, "report.md")
+    html_report = os.path.join(output_dir, "report.html")
+
+    with open(json_report, "w") as f:
+        json.dump(scan_results, f, indent=4)
+
+    with open(csv_report, "w") as f:
+        writer = csv.writer(f)
+        for key, value in scan_results.items():
+            writer.writerow([key, value])
+
+    with open(md_report, "w") as f:
+        f.write("# Scan Results\n")
+        for key, value in scan_results.items():
+            f.write(f"## {key}\n")
+            f.write(f"{value}\n")
+
+    with open(md_report, "r") as f:
+        html_content = markdown.markdown(f.read())
+
+    with open(html_report, "w") as f:
+        f.write(html_content)
+
+    print(f"[+] Reports saved to {output_dir}")
+
+def main():
+    parser = argparse.ArgumentParser(description="Reporting")
+    parser.add_argument("--output", default="./results", help="Output directory")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
+    args = parser.parse_args()
+
+    scan_results = {
+        "target": args.target,
+        "subdomains": os.path.join(args.output, "subdomains.txt"),
+        "active_hosts": os.path.join(args.output, "subdomains_alive.txt"),
+        "urls": os.path.join(args.output, "allurls.txt"),
+        "js_files": os.path.join(args.output, "js.txt"),
+        "sensitive_files": os.path.join(args.output, "sensitive_files.txt"),
+        "vuln_results": os.path.join(args.output, "vuln_results.json"),
+        "js_exposures_file": os.path.join(args.output, "js_exposures.txt"),
+        "js_root_exposures_file": os.path.join(args.output, "js_root_exposures.txt")
+    }
+
+    generate_report(scan_results, args.output, args.verbose)
+
+if __name__ == "__main__":
+    main()
