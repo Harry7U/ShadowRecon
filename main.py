@@ -31,10 +31,10 @@ def main():
         active_hosts = "subdomains_alive.txt"
 
     if "url_extract" in args.modules:
-        urls, js_files = url_extract.extract_data(active_hosts, config)
+        urls, js_files, sensitive_files = url_extract.extract_data(active_hosts, config)
     
     if "vuln" in args.modules:
-        vuln_results = vuln_scanner.scan_vulnerabilities(active_hosts, urls, js_files, config)
+        vuln_results, js_exposures_file, js_root_exposures_file = vuln_scanner.scan_vulnerabilities(active_hosts, urls, js_files, config)
     
     if "exploit" in args.modules:
         exploitation.detect_exploits(urls, config)
@@ -46,7 +46,10 @@ def main():
             "active_hosts": active_hosts,
             "urls": urls,
             "js_files": js_files,
+            "sensitive_files": sensitive_files,
             "vuln_results": vuln_results,
+            "js_exposures_file": js_exposures_file,
+            "js_root_exposures_file": js_root_exposures_file,
         }, config)
 
 if __name__ == "__main__":
