@@ -13,8 +13,7 @@ def install_dependencies(config):
         "katana": "https://github.com/projectdiscovery/katana",
         "gf": "https://github.com/tomnomnom/gf",
         "bxss": "https://github.com/1N3/BXSS",
-        "sqlmap": "https://github.com/sqlmapproject/sqlmap",
-        "redirect-checker": "https://github.com/s0md3v/redirect-checker"
+        "sqlmap": "https://github.com/sqlmapproject/sqlmap"
     })
     for tool, repo in dependencies.items():
         if not command_exists(tool):
