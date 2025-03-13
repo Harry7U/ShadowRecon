@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import os
 from modules import auto_setup, recon, live_scan, url_extract, vuln_scanner, exploitation, reporting
 
 def load_config():
