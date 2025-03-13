@@ -1,24 +1,20 @@
 import os
 import argparse
 
-def extract_data(active_hosts_file, output_dir, verbose):
-    urls_file = os.path.join(output_dir, "allurls.txt")
-    js_file = os.path.join(output_dir, "js.txt")
-    sensitive_files = os.path.join(output_dir, "sensitive_files.txt")
-    print("[+] Extracting URLs and JavaScript files...")
-    os.system(f"katana -list {active_hosts_file} -d 5 -ps -pss waybackarchive,commoncrawl,alienvault -kf -jc -fx -ef woff,css,png,svg,jpg,woff2,jpeg,gif,svg -o {urls_file}")
-    os.system(f"cat {urls_file} | grep -E '\\.js$' > {js_file}")
-    os.system(f"cat {urls_file} | grep -E '\\.txt|\\.log|\\.cache|\\.secret|\\.db|\\.backup|\\.yml|\\.json|\\.gz|\\.rar|\\.zip|\\.config' > {sensitive_files}")
-    print(f"[+] URLs saved to {urls_file}, JavaScript files to {js_file}, and sensitive files to {sensitive_files}")
-    return urls_file, js_file, sensitive_files
+def find_live_hosts(subdomains_file, output_dir, verbose):
+    output_file = os.path.join(output_dir, "subdomains_alive.txt")
+    print("[+] Scanning for live hosts...")
+    os.system(f"cat {subdomains_file} | httpx -ports 80,443,8080,8000,8888 -threads 200 -silent > {output_file}")
+    print(f"[+] Live hosts saved to {output_file}")
+    return output_file
 
 def main():
-    parser = argparse.ArgumentParser(description="URL Extraction")
+    parser = argparse.ArgumentParser(description="Live Host Detection")
     parser.add_argument("--output", default="./results", help="Output directory")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
     args = parser.parse_args()
 
-    extract_data(os.path.join(args.output, "subdomains_alive.txt"), args.output, args.verbose)
+    find_live_hosts(os.path.join(args.output, "subdomains.txt"), args.output, args.verbose)
 
 if __name__ == "__main__":
     main()
