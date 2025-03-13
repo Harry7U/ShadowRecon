@@ -7,7 +7,9 @@
     "katana": "https://github.com/projectdiscovery/katana",
     "gf": "https://github.com/tomnomnom/gf",
     "bxss": "https://github.com/1N3/BXSS",
-    "sqlmap": "https://github.com/sqlmapproject/sqlmap"
+    "sqlmap": "https://github.com/sqlmapproject/sqlmap",
+    "corsy": "https://github.com/s0md3v/Corsy",
+    "subzy": "https://github.com/LukaSikic/subzy"
   },
   "parallel_threads": 200,
   "ports": "80,443,8080,8000,8888",
