@@ -14,11 +14,13 @@ def install_dependencies(config):
         "gf": "https://github.com/tomnomnom/gf",
         "bxss": "https://github.com/1N3/BXSS",
         "sqlmap": "https://github.com/sqlmapproject/sqlmap",
-        "openredirect": "https://github.com/ak1t4/openredirect"
+        "redirect-checker": "https://github.com/s0md3v/redirect-checker"
     })
     for tool, repo in dependencies.items():
         if not command_exists(tool):
             print(f"[+] Installing {tool}...")
+            if os.path.exists(tool):
+                os.system(f"rm -rf {tool}")
             os.system(f"git clone {repo}")
             tool_dir = repo.split('/')[-1]
             os.chdir(tool_dir)
