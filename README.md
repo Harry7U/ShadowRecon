@@ -1,6 +1,6 @@
 # 🌟 ShadowRecon 🌟
 
-Welcome to **ShadowRecon**, your ultimate automated bug hunting and security reconnaissance tool. This tool is designed to streamline the process of finding vulnerabilities and gathering intelligence on your target.
+Welcome to **ShadowRecon**, your ultimate automated bug hunting and security reconnaissance tool. This tool is designed to streamline the process of finding vulnerabilities and gathering intelligence on your targets.
 
 ## 🚀 Features
 
@@ -22,26 +22,24 @@ pip install -r requirements.txt
 
 ## 🔍 Usage
 
-Run the tool by specifying the target domain or IP address:
+Run the tool by specifying the target domain or IP address using the `shadow_recon.sh` script:
 
 ```bash
-python3 main.py --target example.com
+./shadow_recon.sh --target example.com
 ```
 
-### Available Modules
+### Available Options
 
-- `setup`: Install dependencies
-- `recon`: Enumerate subdomains
-- `livescan`: Find live hosts
-- `url_extract`: Extract URLs and JavaScript files
-- `vuln`: Scan for vulnerabilities
-- `exploit`: Detect exploits
-- `report`: Generate reports
+- `--target`: **(Required)** The target domain or IP address to scan.
+- `--threads`: **(Optional)** Number of threads to use for scanning. Default is 50.
+- `--scan`: **(Optional)** Specify which scans to run. Options include `xss`, `sql`, `lfi`, `all`. Default is `all`.
+- `--output`: **(Optional)** Directory to save the output results. Default is `./results`.
+- `--verbose`: **(Optional)** Enable verbose logging.
 
-Example of running specific modules:
+Example of running with custom options:
 
 ```bash
-python3 main.py --target example.com --modules recon livescan vuln
+./shadow_recon.sh --target example.com --threads 100 --scan xss,sql,lfi --output ./custom_results --verbose
 ```
 
 ## 📊 Reporting
