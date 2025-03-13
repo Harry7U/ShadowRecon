@@ -21,12 +21,13 @@ def install_dependencies(config):
             print(f"[+] Installing {tool}...")
             os.system(f"git clone {repo}")
             tool_dir = repo.split('/')[-1]
-            if os.path.exists(f"./{tool_dir}/go.mod"):
-                os.chdir(tool_dir)
+            os.chdir(tool_dir)
+            if not os.path.exists("go.mod") and tool in ['subfinder', 'assetfinder', 'nuclei', 'katana']:
                 os.system("go mod init")
+            if tool in ['subfinder', 'assetfinder', 'nuclei', 'katana']:
                 os.system("go build .")
-                os.chdir("..")
-            else:
-                os.system(f"cd {tool_dir} && go build . && cd ..")
+            if tool == 'gf':
+                os.system("go install ./...")
+            os.chdir("..")
         else:
             print(f"[+] {tool} is already installed.")
